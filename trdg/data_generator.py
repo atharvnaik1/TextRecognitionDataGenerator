@@ -130,9 +130,15 @@ class FakeTextDataGenerator(object):
                 distorted_img.size[0]
                 * (float(size - vertical_margin) / float(distorted_img.size[1]))
             )
-            resized_img = distorted_img.resize(
-                (new_width, size - vertical_margin), Image.ANTIALIAS
-            )
+            try:
+                resized_img = distorted_img.resize(
+                    (new_width, size - vertical_margin), Image.ANTIALIAS
+                )
+            except Exception as e:
+                # distorted_img.save("error.png")
+                # import pdb;pdb.set_trace()
+                return
+                
             resized_mask = distorted_mask.resize((new_width, size - vertical_margin), Image.NEAREST)
             background_width = width if width > 0 else new_width + horizontal_margin
             background_height = size
