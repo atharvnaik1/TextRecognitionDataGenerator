@@ -101,3 +101,22 @@ ENV/
 .mypy_cache/
 
 .vscode/*
+
+
+combined-backgrounds
+dataset-march-10-contextual-form
+old-label-format-1--gt-files
+out-sample-Naskh-Regular-100
+out-sample-Naskh-Regular-100--format-2
+dataset-march-10-contextual-form.tar
+rec_gt_test_combined.txt
+rec_gt_train_combined.txt
+error.jpg
+extra_chars_v2.txt
+extra_chars.txt
+label-with-parent-name.txt
+out-Amiri-Regular-50-all-news-corpus-chunk-02/
+
+## optional 
+trdg/out
+trdg/dicts
