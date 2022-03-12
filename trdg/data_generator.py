@@ -11,6 +11,7 @@ try:
 except ImportError as e:
     print("Missing modules for handwritten text generation.")
 
+import json
 
 class FakeTextDataGenerator(object):
     @classmethod
@@ -176,9 +177,30 @@ class FakeTextDataGenerator(object):
                     background_height, background_width
                 )
             else:
-                background_img = background_generator.image(
+                #############################################
+                ## Modified on -- 12 march 2022 
+                ## to get cropped backfround info and cordinates
+                ## for joining patch file 
+                #############################################
+                background_img, cordinates, bg_image_file = background_generator.image(
                     background_height, background_width, image_dir
                 )
+                # print(f"Index: ", index)
+                # print(f"bg_image_file :", bg_image_file)
+                # print(f"cordinates: ", cordinates)
+
+                dictionary = {
+                    "index": index,
+                    "bg_image_file": bg_image_file,
+                    "cordinates": cordinates,
+                }
+                # Serializing json 
+                json_object = json.dumps(dictionary, indent = 4)
+                
+                # Writing to sample.json
+                with open(os.path.join(out_dir, f"{index}_bgcrop.json"), "w") as outfile:
+                    outfile.write(json_object)
+                    
             background_mask = Image.new(
                 "RGB", (background_width, background_height), (0, 0, 0)
             )

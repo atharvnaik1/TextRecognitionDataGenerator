@@ -62,8 +62,11 @@ def image(height, width, image_dir):
     images = os.listdir(image_dir)
 
     if len(images) > 0:
+        randomly_selected_bg_image_file = os.path.join(image_dir, images[rnd.randint(0, len(images) - 1)])
+        # print(f"randomly_selected_bg_image_file for background: ", randomly_selected_bg_image_file)
+
         pic = Image.open(
-            os.path.join(image_dir, images[rnd.randint(0, len(images) - 1)])
+            randomly_selected_bg_image_file
         )
 
         if pic.size[0] < width:
@@ -84,6 +87,7 @@ def image(height, width, image_dir):
         else:
             y = rnd.randint(0, pic.size[1] - height)
 
-        return pic.crop((x, y, x + width, y + height))
+        cordinates = (x, y, x + width, y + height)
+        return (pic.crop(cordinates), cordinates, randomly_selected_bg_image_file)
     else:
         raise Exception("No images where found in the images folder!")

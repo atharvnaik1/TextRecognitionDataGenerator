@@ -5,7 +5,7 @@ from nb_utils.file_dir_handling import list_files
 import pandas as pd
 from tqdm.auto import tqdm
 
-dir_dataset_parent = "/home/nivratti/Desktop/TextRecognitionDataGenerator/"
+dir_dataset_parent = "/home/nivratti/Desktop/TextRecognitionDataGenerator/dataset/march-12/"
 
 display_message = False
 cnt_successful = 0
@@ -18,10 +18,13 @@ cnt_successful = 0
 #     lst_subfoldernames.append(subfoldername)
 
 lst_subfoldernames = [
-    "out-Amiri-Regular-4k-all-news-corpus-chunk-01",
-    # "out-Amiri-Regular-100k-all-news-corpus-chunk-01",
-    # "out-Amiri-Regular-500k-all-news-corpus-chunk-02",
-    # "out-Amiri-Regular-500k-all-news-corpus-chunk-03",
+    "out-Latif-Regular-all-news-corpus-chunk-08",
+    # "out-Naskh-Regular-all-news-corpus-chunk-05",
+    # "out-Naskh-Regular-all-news-corpus-chunk-06",
+    # "out-Naskh-Regular-all-news-corpus-chunk-07",
+    # "out-Latif-Regular-all-news-corpus-chunk-08",
+    # "out-Latif-Regular-all-news-corpus-chunk-09",
+    # "out-Latif-Regular-all-news-corpus-chunk-10",
 ]
 
 for subfoldername in lst_subfoldernames:
@@ -41,7 +44,7 @@ for subfoldername in lst_subfoldernames:
 
     lst_filename = []
     words = []
-    df = df.reset_index()  # make sure indexes pair with number of rows
+    # df = df.reset_index()  # make sure indexes pair with number of rows
     for index, row in df.iterrows():
         # print(row['c1'], row['c2'])
         img_filename = row['filename']
@@ -66,7 +69,7 @@ for subfoldername in lst_subfoldernames:
     new_df.to_csv(out_filepath, sep='\t', index=None, header=None)
 
     ## add parent folder-name in filename
-    new_df['filename'] = f"{subfoldername}/" + new_df['filename']
+    new_df['filename'] = f"{subfoldername}/" + new_df['filename'].astype("str")
     out_filepath = os.path.join(subfolder_path, "label-with-parent-name.txt")
     new_df.to_csv(out_filepath, sep='\t', index=None, header=None)
 
