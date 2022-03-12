@@ -479,7 +479,7 @@ def main():
                 file_name = str(i) + "." + args.extension
 
                 ## Check is file exists before writing it in label file
-                file_abs_path = os.path.join(file_name, args.output_dir)
+                file_abs_path = os.path.join(args.output_dir, file_name)
                 if not os.path.exists(file_abs_path):
                     continue
 
