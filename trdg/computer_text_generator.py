@@ -46,6 +46,7 @@ def _generate_horizontal_text(
 
     space_width = int(image_font.getsize(" ")[0] * space_width)
 
+    # word_split = True ## for dev purpose
     if word_split:
         splitted_text = []
         for w in text.split(" "):
@@ -88,6 +89,10 @@ def _generate_horizontal_text(
         rnd.randint(min(stroke_c1[1], stroke_c2[1]), max(stroke_c1[1], stroke_c2[1])),
         rnd.randint(min(stroke_c1[2], stroke_c2[2]), max(stroke_c1[2], stroke_c2[2])),
     )
+    
+    # from remote_pdb import RemotePdb ## can hold multiprocessing code
+    # rpdb = RemotePdb('0.0.0.0', 4444)
+    # rpdb.set_trace()
 
     for i, p in enumerate(splitted_text):
         txt_img_draw.text(
