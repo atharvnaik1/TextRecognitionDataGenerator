@@ -189,18 +189,20 @@ class FakeTextDataGenerator(object):
                 # print(f"bg_image_file :", bg_image_file)
                 # print(f"cordinates: ", cordinates)
 
-                dictionary = {
-                    "index": index,
-                    "bg_image_file": bg_image_file,
-                    "cordinates": cordinates,
-                }
-                # Serializing json 
-                json_object = json.dumps(dictionary, indent = 4)
-                
-                # Writing to sample.json
-                with open(os.path.join(out_dir, f"{index}_bgcrop.json"), "w") as outfile:
-                    outfile.write(json_object)
+                if output_bboxes:
+                    ## TODO -- Add separate flag to control saving of bg and cropped area meta
+                    dictionary = {
+                        "index": index,
+                        "bg_image_file": bg_image_file,
+                        "cropped_area_cordinates": cordinates,
+                    }
+                    # Serializing json 
+                    json_object = json.dumps(dictionary, indent = 4)
                     
+                    # Writing to sample.json
+                    with open(os.path.join(out_dir, f"{index}_bgcrop.json"), "w") as outfile:
+                        outfile.write(json_object)
+                        
             background_mask = Image.new(
                 "RGB", (background_width, background_height), (0, 0, 0)
             )
