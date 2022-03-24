@@ -477,6 +477,12 @@ def main():
         ) as f:
             for i in range(string_count):
                 file_name = str(i) + "." + args.extension
+
+                ## Check is file exists before writing it in label file
+                file_abs_path = os.path.join(args.output_dir, file_name)
+                if not os.path.exists(file_abs_path):
+                    continue
+
                 label = strings[i]
                 if args.space_width == 0:
                     label = label.replace(" ", "")
