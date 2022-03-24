@@ -34,7 +34,7 @@ class GeneratorFromStrings:
         margins=(5, 5, 5, 5),
         fit=False,
         output_mask=False,
-        word_split=False,
+        word_split=True,
         image_dir=os.path.join(
             "..", os.path.split(os.path.realpath(__file__))[0], "images"
         ),
