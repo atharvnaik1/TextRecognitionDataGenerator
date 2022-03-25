@@ -128,7 +128,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="Define the extension to save the image with",
-        default="jpg",
+        default="png",
     )
     parser.add_argument(
         "-k",
@@ -338,7 +338,7 @@ def parse_arguments():
         type=str,
         nargs="?",
         help="Define the image mode to be used. RGB is default, L means 8-bit grayscale images, 1 means 1-bit binary images stored with one pixel per byte, etc.",
-        default="RGB",
+        default="RGBA",
     )
     return parser.parse_args()
 
