@@ -63,6 +63,7 @@ class FakeTextDataGenerator(object):
             horizontal_margin = margin_left + margin_right
             vertical_margin = margin_top + margin_bottom
 
+            print(f"text: ", text)
             ##########################
             # Create picture of text #
             ##########################
@@ -180,7 +181,10 @@ class FakeTextDataGenerator(object):
                 )
             elif background_type == 4:
                 ## Transparent background
-                background_img = Image.new('RGBA', (background_width, background_height), (0, 0, 0, 0))
+                # background_img = Image.new('RGBA', (background_width, background_height), (0, 0, 0, 0))
+                ## For pure black text use diffrent background color -- to avoid issue in bounding boxes mask 
+                background_img = Image.new('RGBA', (background_width, background_height), (255, 255, 255, 0))
+                
                 # background_img.save(os.path.join(out_dir, "tranparent-bg.png"))
             else:
                 #############################################
