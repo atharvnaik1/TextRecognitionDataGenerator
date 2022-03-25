@@ -210,7 +210,7 @@ class FakeTextDataGenerator(object):
                         outfile.write(json_object)
                         
             background_mask = Image.new(
-                "RGBA", (background_width, background_height), (0, 0, 0, 0)
+                "RGB", (background_width, background_height), (0, 0, 0)
             )
 
             ##############################################################
@@ -273,12 +273,13 @@ class FakeTextDataGenerator(object):
             final_image = background_img.filter(gaussian_filter)
             final_mask = background_mask.filter(gaussian_filter)
             
-            ############################################
-            # Change image mode (RGB, grayscale, etc.) #
-            ############################################
+            ## For keeping tarnsparency -RGBA -- it not showing output bboxes
+            # ############################################
+            # # Change image mode (RGB, grayscale, etc.) #
+            # ############################################
             
-            final_image = final_image.convert(image_mode)
-            final_mask = final_mask.convert(image_mode) 
+            # final_image = final_image.convert(image_mode)
+            # final_mask = final_mask.convert(image_mode) 
 
             #####################################
             # Generate name for resulting image #
@@ -305,6 +306,12 @@ class FakeTextDataGenerator(object):
             # Save the image
             if out_dir is not None:
                 final_image.save(os.path.join(out_dir, image_name))
+                
+                ## If image RGBA -- then convert to RGB to properly get word bounding boxes
+                if image_mode == "RGBA":
+                    final_image = final_image.convert("RGB")
+                    final_mask = final_mask.convert("RGB")
+
                 if output_mask == 1:
                     final_mask.save(os.path.join(out_dir, mask_name))
                 if output_bboxes == 1:
