@@ -60,7 +60,8 @@ def parse_arguments():
         type=int,
         nargs="?",
         help="The number of images to be created.",
-        required=True,
+        required=False,
+        default=1
     )
     parser.add_argument(
         "-rs",
