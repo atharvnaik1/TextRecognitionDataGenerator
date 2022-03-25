@@ -161,6 +161,8 @@ class FakeTextDataGenerator(object):
             else:
                 raise ValueError("Invalid orientation")
 
+            # resized_img.save(os.path.join(out_dir, "resized_img.png"))
+
             #############################
             # Generate background image #
             #############################
@@ -176,6 +178,10 @@ class FakeTextDataGenerator(object):
                 background_img = background_generator.quasicrystal(
                     background_height, background_width
                 )
+            elif background_type == 4:
+                ## Transparent background
+                background_img = Image.new('RGBA', (background_width, background_height), (0, 0, 0, 0))
+                # background_img.save(os.path.join(out_dir, "tranparent-bg.png"))
             else:
                 #############################################
                 ## Modified on -- 12 march 2022 
@@ -204,7 +210,7 @@ class FakeTextDataGenerator(object):
                         outfile.write(json_object)
                         
             background_mask = Image.new(
-                "RGB", (background_width, background_height), (0, 0, 0)
+                "RGBA", (background_width, background_height), (0, 0, 0, 0)
             )
 
             ##############################################################
