@@ -485,6 +485,7 @@ def main():
                     continue
 
                 label = strings[i]
+                # print(f"label: ", label)
                 if args.space_width == 0:
                     label = label.replace(" ", "")
                 f.write("{} {}\n".format(file_name, label))
