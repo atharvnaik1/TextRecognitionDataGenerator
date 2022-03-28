@@ -63,7 +63,8 @@ class FakeTextDataGenerator(object):
             horizontal_margin = margin_left + margin_right
             vertical_margin = margin_top + margin_bottom
 
-            print(f"text: ", text)
+            # print(f"Data generator text: ", text)
+
             ##########################
             # Create picture of text #
             ##########################
