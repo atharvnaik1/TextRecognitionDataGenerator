@@ -340,6 +340,24 @@ def parse_arguments():
         help="Define the image mode to be used. RGB is default, L means 8-bit grayscale images, 1 means 1-bit binary images stored with one pixel per byte, etc.",
         default="RGBA",
     )
+
+    ## -----------------------------------------------
+    ## Newly added parameters by Nivratti
+
+    """
+    1. preserver indexing :
+        if preserve_indexing set to True -- it will pick elements by order. If count going above dict size then it will be repeated -- ex. if count is 500 and length of dict 498(total dict lines), then all values will be taken and process is repeated for remaining count i.e. 2 more first dict values will be picked
+
+        Useful in : 
+            1) Document card synth : In Qatar document id person name is in both english and arabic needs to be rendered and for that we use two different dictionaries to generate data. And we need to preserve indexing to get equivalent item by order
+    """
+    parser.add_argument(
+        "-pi",
+        "--preserve_indexing",
+        action="store_true",
+        help="if preserve_indexing set to True -- it will pick elements by order.",
+        default=False,
+    )
     return parser.parse_args()
 
 
@@ -410,7 +428,8 @@ def main():
             args.name_format = 2
     else:
         strings = create_strings_from_dict(
-            args.length, args.random, args.count, lang_dict
+            args.length, args.random, args.count, lang_dict, 
+            preserve_indexing=args.preserve_indexing
         )
 
     if args.language == "ar":

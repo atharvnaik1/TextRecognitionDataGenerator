@@ -26,19 +26,35 @@ def create_strings_from_file(filename, count):
     return strings
 
 
-def create_strings_from_dict(length, allow_variable, count, lang_dict):
+def create_strings_from_dict(
+    length, allow_variable, count, lang_dict, preserve_indexing=False
+    ):
     """
         Create all strings by picking X random word in the dictionnary
+
+        if preserve_indexing set to True -- it will pick elements by order. If count going above dict size then it will be repeated -- ex. if count is 500 and length of dict 498(total dict lines), then all values will be taken and process is repeated for remaining count i.e. 2 more first dict values will be picked
     """
 
     dict_len = len(lang_dict)
+
+    # preserve_indexing = True ## for development purpose
+        
     strings = []
-    for _ in range(0, count):
-        current_string = ""
-        for _ in range(0, rnd.randint(1, length) if allow_variable else length):
-            current_string += lang_dict[rnd.randrange(dict_len)]
-            current_string += " "
-        strings.append(current_string[:-1])
+    for index in range(0, count):
+        if preserve_indexing:
+            ## It does not consider length value -- it assumes user only want to pick single line value
+            if index >= dict_len:
+                current_string = lang_dict[index % dict_len]
+            else:
+                current_string = lang_dict[index]
+
+            strings.append(current_string)
+        else:
+            current_string = ""
+            for _ in range(0, rnd.randint(1, length) if allow_variable else length):
+                current_string += lang_dict[rnd.randrange(dict_len)]
+                current_string += " "
+            strings.append(current_string[:-1])
     return strings
 
 
