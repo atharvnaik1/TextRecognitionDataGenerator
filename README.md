@@ -2,6 +2,11 @@
 
 A synthetic data generator for text recognition
 
+## Sample usage command
+```console
+python trdg/run.py --dict "test.txt" --margins 1 --fit --format 18 --font "trdg/fonts/latin/Roboto-Bold.ttf" --output_bboxes 1 --background 1 --name_format 2 --count 10
+```
+
 ## What is it for?
 
 Generating text image samples to train an OCR software. Now supporting non-latin text! For a more thorough tutorial see [the official documentation](https://textrecognitiondatagenerator.readthedocs.io/en/latest/index.html).
