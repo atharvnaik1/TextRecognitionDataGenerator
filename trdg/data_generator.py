@@ -3,6 +3,8 @@ import random as rnd
 
 from PIL import Image, ImageFilter, ImageStat
 
+from nb_utils.error_handling import trace_error
+
 from trdg import computer_text_generator, background_generator, distorsion_generator
 from trdg.utils import mask_to_bboxes
 
@@ -336,4 +338,6 @@ class FakeTextDataGenerator(object):
 
         except Exception as e:
             print(f"Exception in ... Index: ", index, " text: ", text, " Exception:", e)
+            full_error = trace_error()
+            print(full_error)
             return
