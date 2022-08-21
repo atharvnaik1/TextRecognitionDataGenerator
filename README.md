@@ -4,8 +4,14 @@ A synthetic data generator for text recognition
 
 ## Sample usage command
 ```console
-python trdg/run.py --dict "test.txt" --margins 1 --fit --format 18 --font "trdg/fonts/latin/Roboto-Bold.ttf" --output_bboxes 1 --background 1 --name_format 2 --count 10
+python3 trdg/run.py --dict "test.txt" --margins 1 --fit --format 18 --font "trdg/fonts/latin/Roboto-Bold.ttf" --output_bboxes 1 --background 1 --name_format 2 --count 10
 ```
+
+For arabic language
+```console
+python3  trdg/run.py --language ar --dict "/home/nivratti/Downloads/Sabanews-unique-words.txt" --margins 1 --fit --format 32 --font "trdg/fonts/ar/Times-New-Roman-bold--copied-from-windows-font-manager.ttf" --output_bboxes 1 --background 1 --name_format 2  --word_split  --output_dir "out-samples-100" --count 100
+```
+Note: --word_split is important for arabic, so it will give contextual form text on image instead of isolated. It will split based on words and not on chars. It will join chars to form word and reshape chars. If you take sample text and try to add space in chars it will change form.
 
 ## What is it for?
 
