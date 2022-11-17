@@ -437,8 +437,15 @@ def main():
         from bidi.algorithm import get_display
 
         arabic_reshaper = ArabicReshaper()
+        # strings = [
+        #     " ".join([get_display(arabic_reshaper.reshape(w)) for w in s.split(" ")[::-1]])
+        #     for s in strings
+        # ]
+        ## changes -- 17-11-2022
+        ## get strings without RTL display
+        ## to properly render UAE identity card
         strings = [
-            " ".join([get_display(arabic_reshaper.reshape(w)) for w in s.split(" ")[::-1]])
+            " ".join([arabic_reshaper.reshape(w) for w in s.split(" ")[::-1]])
             for s in strings
         ]
     if args.case == "upper":
