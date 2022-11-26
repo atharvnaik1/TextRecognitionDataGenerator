@@ -80,6 +80,8 @@ class GeneratorFromStrings:
         self.image_dir = image_dir
         self.output_bboxes = output_bboxes
         self.generated_count = 0
+        self.check = 1
+        self.check2 = 0
         self.stroke_width = stroke_width
         self.stroke_fill = stroke_fill
         self.image_mode = image_mode 
@@ -91,14 +93,20 @@ class GeneratorFromStrings:
         return self.next()
 
     def next(self):
-        if self.generated_count == self.count:
+        if self.generated_count == len(self.fonts):
             raise StopIteration
         self.generated_count += 1
+        test = self.strings[(self.generated_count - 1) % len(self.strings)]
+        fon = self.fonts[(self.check - 1) % len(self.fonts)]
+        self.check2 += 1
+        if len(self.strings) == self.strings.index(test)+1:
+            self.check += 1
+            self.check2 = 0
         return (
             FakeTextDataGenerator.generate(
                 self.generated_count,
                 self.strings[(self.generated_count - 1) % len(self.strings)],
-                self.fonts[(self.generated_count - 1) % len(self.fonts)],
+                fon,
                 None,
                 self.size,
                 None,
@@ -127,6 +135,8 @@ class GeneratorFromStrings:
                 self.image_mode, 
                 self.output_bboxes,
             ),
+            fon,
+            self.check2,
             self.orig_strings[(self.generated_count - 1) % len(self.orig_strings)] if self.rtl else self.strings[(self.generated_count - 1) % len(self.strings)],
         )
 

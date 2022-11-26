@@ -53,7 +53,7 @@ class Generators(unittest.TestCase):
             i += 1
 
     def test_generator_from_strings(self):
-        generator = GeneratorFromStrings(["TEST TEST TEST"])
+        generator = GeneratorFromStrings(["TEST1 TEST1 TEST1"])
         i = 0
         while i < 100:
             img, lbl = next(generator)
