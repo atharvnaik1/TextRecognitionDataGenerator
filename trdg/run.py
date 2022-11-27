@@ -149,7 +149,7 @@ def parse_arguments():
         "-wk",
         "--use_wikipedia",
         action="store_true",
-        help="Use Wikipedia as the source text for the generation, using this paremeter ignores -r, -n, -s",
+        help="Use Wikipedia as the source text for the generation, using this parameter ignores -r, -n, -s",
         default=False,
     )
     parser.add_argument(
@@ -185,7 +185,13 @@ def parse_arguments():
         "-na",
         "--name_format",
         type=int,
-        help="Define how the produced files will be named. 0: [TEXT]_[ID].[EXT], 1: [ID]_[TEXT].[EXT] 2: [ID].[EXT] + one file labels.txt containing id-to-label mappings",
+        help="""
+            Define how the produced files will be named. 
+            0: [TEXT]_[ID].[EXT], 
+            1: [ID]_[TEXT].[EXT] 
+            2: [ID].[EXT] + one file labels.txt containing id-to-label mappings
+            3: [ID].[EXT] + [ID].txt containing label i.e text of each image
+        """,
         default=0,
     )
     parser.add_argument(

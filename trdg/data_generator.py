@@ -300,6 +300,8 @@ class FakeTextDataGenerator(object):
                 name = "{}_{}".format(str(index), text)
             elif name_format == 2:
                 name = str(index)
+            elif name_format == 3:
+                name = str(index)
             else:
                 print("{} is not a valid name format. Using default.".format(name_format))
                 name = "{}_{}".format(text, str(index))
@@ -314,6 +316,12 @@ class FakeTextDataGenerator(object):
             if out_dir is not None:
                 final_image.save(os.path.join(out_dir, image_name))
                 
+                if name_format == 3:
+                    # save label
+                    txt_filename = os.path.join(out_dir, f"{str(index)}.txt")
+                    with open(txt_filename, 'w', encoding='utf-8') as f:
+                        f.write(text)
+                    
                 ## If image RGBA -- then convert to RGB to properly get word bounding boxes
                 if image_mode == "RGBA":
                     final_image = final_image.convert("RGB")
@@ -321,12 +329,13 @@ class FakeTextDataGenerator(object):
 
                 if output_mask == 1:
                     final_mask.save(os.path.join(out_dir, mask_name))
+
                 if output_bboxes == 1:
                     bboxes = mask_to_bboxes(final_mask)
                     with open(os.path.join(out_dir, box_name), "w") as f:
                         for bbox in bboxes:
                             f.write(" ".join([str(v) for v in bbox]) + "\n")
-                if output_bboxes == 2:
+                if output_bboxes == 2 or output_bboxes == 3:
                     bboxes = mask_to_bboxes(final_mask, tess=True)
                     with open(os.path.join(out_dir, tess_box_name), "w") as f:
                         for bbox, char in zip(bboxes, text):
