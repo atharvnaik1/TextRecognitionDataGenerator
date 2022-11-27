@@ -142,3 +142,8 @@ out-NotoSansArabic-Regular-all-news-corpus-chunk-12/
 out-samples-bboxes--other-experiment.tar
 out-samples-bboxes--other-experiment/
 out-samples/
+
+##
+.idea
+check
+out/

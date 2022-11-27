@@ -1,3 +1,19 @@
+"""
+Modified script of trdg.run.py
+
+to support generating font wise data
+
+ex. For font Times_new_roman the data will saved in that folder -- Times_new_roman/1.png 
+
+Usage:
+
+1) to generate all font data -- separate folder for each-- 
+    python main.py  --count 5 --name_format 3 --font_wise_separate_data
+
+2) Specific font:
+  python trdg/run.py  --count 5 --name_format 3 --font_wise_separate_data  --font "./trdg/fonts/latin/AllerDisplay.ttf"
+
+"""
 import argparse
 import errno
 import os
@@ -364,81 +380,146 @@ def parse_arguments():
         help="if preserve_indexing set to True -- it will pick elements by order.",
         default=False,
     )
+    parser.add_argument(
+        "-fsd",
+        "--font_wise_separate_data",
+        action="store_true",
+        help="""
+            if font_wise_separate_data set to True it will store data for each font
+            else it will generate original format mix of data. Default to false.
+        """,
+        default=False,
+    )
     return parser.parse_args()
 
-
-def main():
+def generate_text_data(
+        alignment=1, background=0, blur=0, case=None, character_spacing=0, count=1, 
+        dict=None, distorsion=0, distorsion_orientation=0, extension='png', 
+        fit=False, font=None, font_dir=None, format=32, handwritten=False, 
+        image_dir='./images', image_mode='RGBA', 
+        include_letters=False, include_numbers=False, include_symbols=False, 
+        input_file='', language='en', length=1, margins=(5, 5, 5, 5), 
+        name_format=3, orientation=0, output_bboxes=0, output_dir='out/', 
+        output_mask=0, preserve_indexing=False, random=False, random_blur=False, 
+        random_sequences=False, random_skew=False, skew_angle=0, space_width=1.0, 
+        stroke_fill='#282828', stroke_width=0, text_color='#282828', thread_count=1, 
+        use_wikipedia=False, width=-1, word_split=True,
+        font_wise_separate_data=False
+    ):
     """
-        Description: Main function
+    Generate text data
+    TODO: add doc details later
+
+    Args:
+        alignment (int, optional): _description_. Defaults to 1.
+        background (int, optional): _description_. Defaults to 0.
+        blur (int, optional): _description_. Defaults to 0.
+        case (_type_, optional): _description_. Defaults to None.
+        character_spacing (int, optional): _description_. Defaults to 0.
+        count (int, optional): _description_. Defaults to 1.
+        dict (_type_, optional): _description_. Defaults to None.
+        distorsion (int, optional): _description_. Defaults to 0.
+        distorsion_orientation (int, optional): _description_. Defaults to 0.
+        extension (str, optional): _description_. Defaults to 'png'.
+        fit (bool, optional): _description_. Defaults to False.
+        font (_type_, optional): _description_. Defaults to None.
+        font_dir (_type_, optional): _description_. Defaults to None.
+        format (int, optional): _description_. Defaults to 32.
+        handwritten (bool, optional): _description_. Defaults to False.
+        image_dir (str, optional): _description_. Defaults to './images'.
+        image_mode (str, optional): _description_. Defaults to 'RGBA'.
+        include_letters (bool, optional): _description_. Defaults to False.
+        include_numbers (bool, optional): _description_. Defaults to False.
+        include_symbols (bool, optional): _description_. Defaults to False.
+        input_file (str, optional): _description_. Defaults to ''.
+        language (str, optional): _description_. Defaults to 'en'.
+        length (int, optional): _description_. Defaults to 1.
+        margins (tuple, optional): _description_. Defaults to (5, 5, 5, 5).
+        name_format (int, optional): _description_. Defaults to 3.
+        orientation (int, optional): _description_. Defaults to 0.
+        output_bboxes (int, optional): _description_. Defaults to 0.
+        output_dir (str, optional): _description_. Defaults to 'out/'.
+        output_mask (int, optional): _description_. Defaults to 0.
+        preserve_indexing (bool, optional): _description_. Defaults to False.
+        random (bool, optional): _description_. Defaults to False.
+        random_blur (bool, optional): _description_. Defaults to False.
+        random_sequences (bool, optional): _description_. Defaults to False.
+        random_skew (bool, optional): _description_. Defaults to False.
+        skew_angle (int, optional): _description_. Defaults to 0.
+        space_width (float, optional): _description_. Defaults to 1.0.
+        stroke_fill (str, optional): _description_. Defaults to '#282828'.
+        stroke_width (int, optional): _description_. Defaults to 0.
+        text_color (str, optional): _description_. Defaults to '#282828'.
+        thread_count (int, optional): _description_. Defaults to 1.
+        use_wikipedia (bool, optional): _description_. Defaults to False.
+        width (int, optional): _description_. Defaults to -1.
+        word_split (bool, optional): _description_. Defaults to True.
+        font_wise_separate_data (bool, optional): _description_. Defaults to False.
     """
-
-    # Argument parsing
-    args = parse_arguments()
-
     # Create the directory if it does not exist.
     try:
-        os.makedirs(args.output_dir)
+        os.makedirs(output_dir)
     except OSError as e:
         if e.errno != errno.EEXIST:
             raise
 
     # Creating word list
-    if args.dict:
+    if dict:
         lang_dict = []
-        if os.path.isfile(args.dict):
-            with open(args.dict, "r", encoding="utf8", errors="ignore") as d:
+        if os.path.isfile(dict):
+            with open(dict, "r", encoding="utf8", errors="ignore") as d:
                 lang_dict = [l for l in d.read().splitlines() if len(l) > 0]
         else:
             sys.exit("Cannot open dict")
     else:
-        lang_dict = load_dict(args.language)
+        lang_dict = load_dict(language)
 
     # Create font (path) list
-    if args.font_dir:
+    if font_dir:
         fonts = [
-            os.path.join(args.font_dir, p)
-            for p in os.listdir(args.font_dir)
+            os.path.join(font_dir, p)
+            for p in os.listdir(font_dir)
             if os.path.splitext(p)[1] == ".ttf"
         ]
-    elif args.font:
-        if os.path.isfile(args.font):
-            fonts = [args.font]
+    elif font:
+        if os.path.isfile(font):
+            fonts = [font]
         else:
             sys.exit("Cannot open font")
     else:
-        fonts = load_fonts(args.language)
+        fonts = load_fonts(language)
 
     # Creating synthetic sentences (or word)
     strings = []
 
-    if args.use_wikipedia:
-        strings = create_strings_from_wikipedia(args.length, args.count, args.language)
-    elif args.input_file != "":
-        strings = create_strings_from_file(args.input_file, args.count)
-    elif args.random_sequences:
+    if use_wikipedia:
+        strings = create_strings_from_wikipedia(length, count, language)
+    elif input_file != "":
+        strings = create_strings_from_file(input_file, count)
+    elif random_sequences:
         strings = create_strings_randomly(
-            args.length,
-            args.random,
-            args.count,
-            args.include_letters,
-            args.include_numbers,
-            args.include_symbols,
-            args.language,
+            length,
+            random,
+            count,
+            include_letters,
+            include_numbers,
+            include_symbols,
+            language,
         )
         # Set a name format compatible with special characters automatically if they are used
-        if args.include_symbols or True not in (
-            args.include_letters,
-            args.include_numbers,
-            args.include_symbols,
+        if include_symbols or True not in (
+            include_letters,
+            include_numbers,
+            include_symbols,
         ):
-            args.name_format = 2
+            name_format = 2
     else:
         strings = create_strings_from_dict(
-            args.length, args.random, args.count, lang_dict, 
-            preserve_indexing=args.preserve_indexing
+            length, random, count, lang_dict, 
+            preserve_indexing=preserve_indexing
         )
 
-    if args.language == "ar":
+    if language == "ar":
         from arabic_reshaper import ArabicReshaper
         from bidi.algorithm import get_display
 
@@ -454,14 +535,14 @@ def main():
             " ".join([arabic_reshaper.reshape(w) for w in s.split(" ")[::-1]])
             for s in strings
         ]
-    if args.case == "upper":
+    if case == "upper":
         strings = [x.upper() for x in strings]
-    if args.case == "lower":
+    if case == "lower":
         strings = [x.lower() for x in strings]
 
     string_count = len(strings)
 
-    p = Pool(args.thread_count)
+    p = Pool(thread_count)
     for _ in tqdm(
         p.imap_unordered(
             FakeTextDataGenerator.generate_from_tuple,
@@ -469,58 +550,111 @@ def main():
                 [i for i in range(0, string_count)],
                 strings,
                 [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)],
-                [args.output_dir] * string_count,
-                [args.format] * string_count,
-                [args.extension] * string_count,
-                [args.skew_angle] * string_count,
-                [args.random_skew] * string_count,
-                [args.blur] * string_count,
-                [args.random_blur] * string_count,
-                [args.background] * string_count,
-                [args.distorsion] * string_count,
-                [args.distorsion_orientation] * string_count,
-                [args.handwritten] * string_count,
-                [args.name_format] * string_count,
-                [args.width] * string_count,
-                [args.alignment] * string_count,
-                [args.text_color] * string_count,
-                [args.orientation] * string_count,
-                [args.space_width] * string_count,
-                [args.character_spacing] * string_count,
-                [args.margins] * string_count,
-                [args.fit] * string_count,
-                [args.output_mask] * string_count,
-                [args.word_split] * string_count,
-                [args.image_dir] * string_count,
-                [args.stroke_width] * string_count,
-                [args.stroke_fill] * string_count,
-                [args.image_mode] * string_count,
-                [args.output_bboxes] * string_count,
+                [output_dir] * string_count,
+                [format] * string_count,
+                [extension] * string_count,
+                [skew_angle] * string_count,
+                [random_skew] * string_count,
+                [blur] * string_count,
+                [random_blur] * string_count,
+                [background] * string_count,
+                [distorsion] * string_count,
+                [distorsion_orientation] * string_count,
+                [handwritten] * string_count,
+                [name_format] * string_count,
+                [width] * string_count,
+                [alignment] * string_count,
+                [text_color] * string_count,
+                [orientation] * string_count,
+                [space_width] * string_count,
+                [character_spacing] * string_count,
+                [margins] * string_count,
+                [fit] * string_count,
+                [output_mask] * string_count,
+                [word_split] * string_count,
+                [image_dir] * string_count,
+                [stroke_width] * string_count,
+                [stroke_fill] * string_count,
+                [image_mode] * string_count,
+                [output_bboxes] * string_count,
             ),
         ),
-        total=args.count,
+        total=count,
     ):
         pass
     p.terminate()
 
-    if args.name_format == 2:
+    if name_format == 2:
         # Create file with filename-to-label connections
         with open(
-            os.path.join(args.output_dir, "labels.txt"), "w", encoding="utf8"
+            os.path.join(output_dir, "labels.txt"), "w", encoding="utf8"
         ) as f:
             for i in range(string_count):
-                file_name = str(i) + "." + args.extension
+                file_name = str(i) + "." + extension
 
                 ## Check is file exists before writing it in label file
-                file_abs_path = os.path.join(args.output_dir, file_name)
+                file_abs_path = os.path.join(output_dir, file_name)
                 if not os.path.exists(file_abs_path):
                     continue
 
                 label = strings[i]
                 # print(f"label: ", label)
-                if args.space_width == 0:
+                if space_width == 0:
                     label = label.replace(" ", "")
                 f.write("{} {}\n".format(file_name, label))
+
+def main():
+    """
+        Description: Main function
+    """
+    from pathlib import Path
+
+    # Argument parsing
+    args = parse_arguments()
+
+    # # dev purpose
+    # import ipdb;ipdb.set_trace()
+
+    if args.font_wise_separate_data:
+        # Create font (path) list
+        if args.font_dir:
+            fonts = [
+                os.path.join(args.font_dir, p)
+                for p in os.listdir(args.font_dir)
+                if os.path.splitext(p)[1] == ".ttf"
+            ]
+        elif args.font:
+            if os.path.isfile(args.font):
+                fonts = [args.font]
+            else:
+                sys.exit("Cannot open font")
+        else:
+            fonts = load_fonts(args.language)
+
+        # TODO -- replace print messages with loguru logger
+        print(f"INFO : Total font files: {len(fonts)}")
+
+        # KEEP ORIGINAL OUTPUT DIR
+        original_output_dir = args.output_dir
+
+        for font in fonts:
+            font_stem = Path(font).stem
+            print(f"=" * 50)
+            print(f"Generating data for font : {font_stem}")
+            args_dict = vars(args)
+
+            # update font and output dir
+            args_dict["font_dir"] = None
+            args_dict["font"] = font
+            args_dict["output_dir"] = os.path.join(original_output_dir, font_stem)
+            os.makedirs(args_dict["output_dir"], exist_ok=True)
+
+            # pass argparse argument to function as-kwargs
+            generate_text_data(**args_dict)
+            print("\n")
+    else:
+        ## Default mode
+        generate_text_data(**vars(args))
 
 
 if __name__ == "__main__":
