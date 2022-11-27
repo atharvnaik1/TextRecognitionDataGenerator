@@ -97,6 +97,7 @@ class GeneratorFromStrings:
             raise StopIteration
         self.generated_count += 1
         test = self.strings[(self.generated_count - 1) % len(self.strings)]
+        print((self.generated_count - 1) % len(self.strings))
         fon = self.fonts[(self.check - 1) % len(self.fonts)]
         self.check2 += 1
         if len(self.strings) == self.strings.index(test)+1:

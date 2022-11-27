@@ -5,7 +5,9 @@ __pycache__/
 
 # C extensions
 *.so
-
+.check/
+.check2/
+.Verify_Fonts/
 # Distribution / packaging
 .Python
 env/
