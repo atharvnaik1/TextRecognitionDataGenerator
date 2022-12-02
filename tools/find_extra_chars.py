@@ -9,7 +9,7 @@ dict_chars = lines
 print(f"dict_chars: ", dict_chars)
 
 # -----------------------------------------------
-# print("\nWe are listing out only the directories in current directory -")
+# print("\nWe are listing new_ar only the directories in current directory -")
 from pathlib import Path
 
 # All subdirectories in the current directory, not recursive.

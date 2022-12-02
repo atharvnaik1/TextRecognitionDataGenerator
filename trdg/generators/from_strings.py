@@ -15,7 +15,7 @@ class GeneratorFromStrings:
         strings,
         count=-1,
         fonts=[],
-        language="en",
+        language="ar_v2",
         size=32,
         skewing_angle=0,
         random_skew=False,
@@ -80,6 +80,7 @@ class GeneratorFromStrings:
         self.image_dir = image_dir
         self.output_bboxes = output_bboxes
         self.generated_count = 0
+        self.total_count = 0
         self.check = 1
         self.check2 = 0
         self.stroke_width = stroke_width
@@ -93,9 +94,10 @@ class GeneratorFromStrings:
         return self.next()
 
     def next(self):
-        if self.generated_count == len(self.fonts):
+        if self.total_count == len(self.fonts)*len(self.strings):
             raise StopIteration
         self.generated_count += 1
+        self.total_count += 1
         test = self.strings[(self.generated_count - 1) % len(self.strings)]
         print((self.generated_count - 1) % len(self.strings))
         fon = self.fonts[(self.check - 1) % len(self.fonts)]
@@ -103,6 +105,7 @@ class GeneratorFromStrings:
         if len(self.strings) == self.strings.index(test)+1:
             self.check += 1
             self.check2 = 0
+            self.generated_count = 0
         return (
             FakeTextDataGenerator.generate(
                 self.generated_count,

@@ -8,13 +8,13 @@ from tqdm.auto import tqdm
 dir_dataset_parent = "/home/nivratti/Desktop/TextRecognitionDataGenerator/dataset-march-10-contextual-form"
 
 lst_train_subfoldernames = [
-    "out-Amiri-Regular-500k-all-news-corpus-chunk-02",
-    "out-Amiri-Regular-500k-all-news-corpus-chunk-03",
+    "new_ar-Amiri-Regular-500k-all-news-corpus-chunk-02",
+    "new_ar-Amiri-Regular-500k-all-news-corpus-chunk-03",
 ]
 
 lst_test_subfoldernames = [
-    "out-Amiri-Regular-4k-all-news-corpus-chunk-01",
-    "out-Amiri-Regular-100k-all-news-corpus-chunk-01",
+    "new_ar-Amiri-Regular-4k-all-news-corpus-chunk-01",
+    "new_ar-Amiri-Regular-100k-all-news-corpus-chunk-01",
 ]
 
 lst_train_labelfiles = []

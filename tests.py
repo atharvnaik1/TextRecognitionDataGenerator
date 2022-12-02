@@ -1190,7 +1190,7 @@ class DataGenerator(unittest.TestCase):
 
     def test_generate_data_with_white_background(self):
         background_generator.plain_white(64, 128).convert("RGB").save(
-            "tests/out/white_background.jpg"
+            "tests/new_ar/white_background.jpg"
         )
 
         self.assertTrue(
@@ -1226,7 +1226,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
@@ -1241,7 +1241,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
@@ -1256,7 +1256,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
@@ -1271,7 +1271,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
@@ -1286,14 +1286,14 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
 
     def test_count_parameter(self):
-        args = ["python3", "run.py", "-c", "10", "--output_dir", "../tests/out/"]
+        args = ["python3", "run.py", "-c", "10", "--output_dir", "../tests/new_ar/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 10)
         empty_directory("tests/out/")
@@ -1307,7 +1307,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(
@@ -1330,7 +1330,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(
@@ -1353,7 +1353,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         with open("tests/out/labels.txt", "r") as f:
@@ -1368,7 +1368,7 @@ class CommandLineInterface(unittest.TestCase):
         empty_directory("tests/out/")
 
     def test_handwritten(self):
-        args = ["python3", "run.py", "-c", "1", "--output_dir", "../tests/out/"]
+        args = ["python3", "run.py", "-c", "1", "--output_dir", "../tests/new_ar/"]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
         empty_directory("tests/out/")
@@ -1382,7 +1382,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
@@ -1397,7 +1397,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
@@ -1412,7 +1412,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
@@ -1427,7 +1427,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
@@ -1442,7 +1442,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 1)
@@ -1457,7 +1457,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
@@ -1472,7 +1472,7 @@ class CommandLineInterface(unittest.TestCase):
             "-c",
             "1",
             "--output_dir",
-            "../tests/out/",
+            "../tests/new_ar/",
         ]
         subprocess.Popen(args, cwd="trdg/").wait()
         self.assertTrue(len(os.listdir("tests/out/")) == 0)
@@ -1483,37 +1483,37 @@ class CommandLineInterface(unittest.TestCase):
 #        args = ['python3', 'run.py', '-c', '1', '-w', '5']
 #        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
-#        empty_directory('tests/out/')
+#        empty_directory('tests/new_ar/')
 #
 #    def test_extension_jpg(self):
 #        args = ['python3', 'run.py', '-c', '1', '-e', 'jpg']
 #        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
-#        empty_directory('tests/out/')
+#        empty_directory('tests/new_ar/')
 #
 #    def test_extension_png(self):
 #        args = ['python3', 'run.py', '-c', '1', '-e', 'png']
 #        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
-#        empty_directory('tests/out/')
+#        empty_directory('tests/new_ar/')
 #
 #    def test_name_format_0(self):
 #        args = ['python3', 'run.py', '-c', '1', '-na', '0']
 #        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
-#        empty_directory('tests/out/')
+#        empty_directory('tests/new_ar/')
 #
 #    def test_name_format_1(self):
 #        args = ['python3', 'run.py', '-c', '1', '-na', '1']
 #        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
-#        empty_directory('tests/out/')
+#        empty_directory('tests/new_ar/')
 #
 #    def test_name_format_2(self):
 #        args = ['python3', 'run.py', '-c', '1', '-na', '2']
 #        subprocess.Popen(args, cwd="trdg/").wait()
 #        self.assertTrue(False)
-#        empty_directory('tests/out/')
+#        empty_directory('tests/new_ar/')
 
 if __name__ == "__main__":
     unittest.main()

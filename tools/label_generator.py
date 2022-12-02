@@ -15,7 +15,7 @@ cnt_successful = 0
 # ## Auto generate from pattern
 # total_subfolders = 18
 # for i in range(1, total_subfolders + 1):
-#     subfoldername = f"out-Amiri-Regular-500k-all-news-corpus-chunk-{i:02}"
+#     subfoldername = f"new_ar-Amiri-Regular-500k-all-news-corpus-chunk-{i:02}"
 #     lst_subfoldernames.append(subfoldername)
 
 # All subdirectories in the current directory, not recursive.
@@ -25,13 +25,13 @@ print("Directories in base dir: ", *directories_in_base_dir, sep="\n")
 lst_subfoldernames = directories_in_base_dir
 
 # lst_subfoldernames = [
-#     "out-Latif-Regular-all-news-corpus-chunk-08",
-#     # "out-Naskh-Regular-all-news-corpus-chunk-05",
-#     # "out-Naskh-Regular-all-news-corpus-chunk-06",
-#     # "out-Naskh-Regular-all-news-corpus-chunk-07",
-#     # "out-Latif-Regular-all-news-corpus-chunk-08",
-#     # "out-Latif-Regular-all-news-corpus-chunk-09",
-#     # "out-Latif-Regular-all-news-corpus-chunk-10",
+#     "new_ar-Latif-Regular-all-news-corpus-chunk-08",
+#     # "new_ar-Naskh-Regular-all-news-corpus-chunk-05",
+#     # "new_ar-Naskh-Regular-all-news-corpus-chunk-06",
+#     # "new_ar-Naskh-Regular-all-news-corpus-chunk-07",
+#     # "new_ar-Latif-Regular-all-news-corpus-chunk-08",
+#     # "new_ar-Latif-Regular-all-news-corpus-chunk-09",
+#     # "new_ar-Latif-Regular-all-news-corpus-chunk-10",
 # ]
 
 for subfolder in lst_subfoldernames:

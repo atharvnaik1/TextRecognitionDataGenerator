@@ -17,7 +17,7 @@ directories_in_base_dir = [f.name for f in Path(raw_data_folder_path).iterdir() 
 print("Directories in base dir: ", *directories_in_base_dir, sep="\n")
 
 lst_val_subfoldernames = [
-    "out-sample-500"
+    "new_ar-sample-500"
 ]
 skip_val_subfoldernames_from_train = False # True
 

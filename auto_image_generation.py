@@ -5,7 +5,7 @@ import os
 """
 lang_dict = []
 with open(
-    os.path.join(os.path.dirname(__file__), "trdg/dicts", 'en' + ".txt"),
+    os.path.join(os.path.dirname(__file__), "trdg/dicts", 'ar' + ".txt"),
     "r",
     encoding="utf8",
     errors="ignore",
@@ -15,7 +15,8 @@ with open(
 image_dir=os.path.join("..", os.path.split(os.path.realpath(__file__))[0], "trdg\\images")
 print(image_dir)
 # This will define the dict count for each font.
-lang_dict = lang_dict[:10]
+lang_dict = lang_dict[:5]
+language = 'en'
 margins = (5, 5, 5, 5)
 # Size or format is the quality of the picture
 size = 64
@@ -28,7 +29,7 @@ output_bboxes = 0
 background_type = 0
 
 
-generator_from_string = GeneratorFromStrings(strings=lang_dict, margins=margins, fit=fit, background_type=background_type,
+generator_from_string = GeneratorFromStrings(strings=lang_dict, language=language, margins=margins, fit=fit, background_type=background_type,
                                              output_bboxes=output_bboxes, size=size, image_dir=image_dir)
 
 # print(generator_from_string.fonts)
@@ -40,14 +41,14 @@ for img, font, c, lbl in generator_from_string:
     #     os.mkdir('check2')
     # except:
     #     pass
-    # try:
-    #     os.mkdir('check2/{}'.format(mf))
-    # except:
-    #     pass
+    try:
+        os.mkdir('check2/{}'.format(mf))
+    except:
+        pass
     # Image Save
-    # img.save("check2/{}/{}.png".format(mf, c),"PNG")
+    img.save("check2/{}/{}.png".format(mf, c),"PNG")
     # Label save
-    # with open('check2/{}/{}.txt'.format(mf, c), 'w') as f:
-    #     f.write(lbl)
-    # count += 1
-    # print(count, lbl)
+    with open('check2/{}/{}.txt'.format(mf, c), 'w', encoding='utf-8') as f:
+        f.write(lbl)
+    count += 1
+    print(count, lbl)

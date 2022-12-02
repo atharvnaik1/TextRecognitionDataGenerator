@@ -52,7 +52,7 @@ def parse_arguments():
         description="Generate synthetic text data for text recognition."
     )
     parser.add_argument(
-        "--output_dir", type=str, nargs="?", help="The output directory", default="out/"
+        "--output_dir", type=str, nargs="?", help="The output directory", default="new_ar/"
     )
     parser.add_argument(
         "-i",
@@ -399,7 +399,7 @@ def generate_text_data(
         image_dir='./images', image_mode='RGBA', 
         include_letters=False, include_numbers=False, include_symbols=False, 
         input_file='', language='en', length=1, margins=(5, 5, 5, 5), 
-        name_format=3, orientation=0, output_bboxes=0, output_dir='out/', 
+        name_format=3, orientation=0, output_bboxes=0, output_dir='new_ar/',
         output_mask=0, preserve_indexing=False, random=False, random_blur=False, 
         random_sequences=False, random_skew=False, skew_angle=0, space_width=1.0, 
         stroke_fill='#282828', stroke_width=0, text_color='#282828', thread_count=1, 
@@ -438,7 +438,7 @@ def generate_text_data(
         name_format (int, optional): _description_. Defaults to 3.
         orientation (int, optional): _description_. Defaults to 0.
         output_bboxes (int, optional): _description_. Defaults to 0.
-        output_dir (str, optional): _description_. Defaults to 'out/'.
+        output_dir (str, optional): _description_. Defaults to 'new_ar/'.
         output_mask (int, optional): _description_. Defaults to 0.
         preserve_indexing (bool, optional): _description_. Defaults to False.
         random (bool, optional): _description_. Defaults to False.

@@ -66,7 +66,7 @@ def main():
     output_dir = args.dest_dir # '/content/images/'
     os.makedirs(output_dir, exist_ok=True)
 
-    input_dir = args.source_dir # '/content/out-sample-word-level-bboxes'
+    input_dir = args.source_dir # '/content/new_ar-sample-word-level-bboxes'
 
     # using pillow to filter images in folder and and store path of images in list
 
