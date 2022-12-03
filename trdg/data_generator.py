@@ -280,13 +280,19 @@ class FakeTextDataGenerator(object):
             final_image = background_img.filter(gaussian_filter)
             final_mask = background_mask.filter(gaussian_filter)
             
-            ## For keeping tarnsparency -RGBA -- it not showing output bboxes
+            ## For keeping transparency -RGBA -- it not showing output bboxes
             # ############################################
             # # Change image mode (RGB, grayscale, etc.) #
             # ############################################
             
-            # final_image = final_image.convert(image_mode)
-            # final_mask = final_mask.convert(image_mode) 
+            if image_mode == "RGBA":
+                ## if RGBA and transparent background mode 4 it making text unclear and not visible sometime
+                ## if we convert so -- skipping
+                pass
+            else:
+                # RGB, grayscale, etc.
+                final_image = final_image.convert(image_mode)
+                final_mask = final_mask.convert(image_mode) 
 
             #####################################
             # Generate name for resulting image #
@@ -298,9 +304,7 @@ class FakeTextDataGenerator(object):
                 name = "{}_{}".format(text, str(index))
             elif name_format == 1:
                 name = "{}_{}".format(str(index), text)
-            elif name_format == 2:
-                name = str(index)
-            elif name_format == 3:
+            elif name_format in [2, 3, 4]:
                 name = str(index)
             else:
                 print("{} is not a valid name format. Using default.".format(name_format))
@@ -321,7 +325,11 @@ class FakeTextDataGenerator(object):
                     txt_filename = os.path.join(out_dir, f"{str(index)}.txt")
                     with open(txt_filename, 'w', encoding='utf-8') as f:
                         f.write(text)
-                    
+                
+                if name_format == 4:
+                    # no labels saved for format 4
+                    pass
+
                 ## If image RGBA -- then convert to RGB to properly get word bounding boxes
                 if image_mode == "RGBA":
                     final_image = final_image.convert("RGB")
@@ -340,6 +348,7 @@ class FakeTextDataGenerator(object):
                     with open(os.path.join(out_dir, tess_box_name), "w") as f:
                         for bbox, char in zip(bboxes, text):
                             f.write(" ".join([char] + [str(v) for v in bbox] + ['0']) + "\n")
+
             else:
                 if output_mask == 1:
                     return final_image, final_mask

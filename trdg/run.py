@@ -36,7 +36,7 @@ def parse_arguments():
         description="Generate synthetic text data for text recognition."
     )
     parser.add_argument(
-        "--output_dir", type=str, nargs="?", help="The output directory", default="new_ar/"
+        "--output_dir", type=str, nargs="?", help="The output directory", default="./out/"
     )
     parser.add_argument(
         "-i",
@@ -172,7 +172,7 @@ def parse_arguments():
         "--background",
         type=int,
         nargs="?",
-        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: Image",
+        help="Define what kind of background to use. 0: Gaussian Noise, 1: Plain white, 2: Quasicrystal, 3: Image 4: transparent background",
         default=0,
     )
     parser.add_argument(
@@ -191,6 +191,7 @@ def parse_arguments():
             1: [ID]_[TEXT].[EXT] 
             2: [ID].[EXT] + one file labels.txt containing id-to-label mappings
             3: [ID].[EXT] + [ID].txt containing label i.e text of each image
+            4: [ID].[EXT] without label -- suitable for font identification and language classification data -- no labels required in that
         """,
         default=0,
     )
