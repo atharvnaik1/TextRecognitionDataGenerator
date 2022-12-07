@@ -391,6 +391,10 @@ def parse_arguments():
         """,
         default=False,
     )
+    parser.add_argument(
+        "input_strings", default=[], nargs='*',
+        help="Option to pass tet directly from command line. It haws highest priority over others if this passed by suer"
+    )
     return parser.parse_args()
 
 def generate_text_data(
@@ -405,7 +409,7 @@ def generate_text_data(
         random_sequences=False, random_skew=False, skew_angle=0, space_width=1.0, 
         stroke_fill='#282828', stroke_width=0, text_color='#282828', thread_count=1, 
         use_wikipedia=False, width=-1, word_split=True,
-        font_wise_separate_data=False
+        font_wise_separate_data=False, input_strings=[],
     ):
     """
     Generate text data
@@ -490,35 +494,38 @@ def generate_text_data(
     else:
         fonts = load_fonts(language)
 
-    # Creating synthetic sentences (or word)
-    strings = []
-
-    if use_wikipedia:
-        strings = create_strings_from_wikipedia(length, count, language)
-    elif input_file != "":
-        strings = create_strings_from_file(input_file, count)
-    elif random_sequences:
-        strings = create_strings_randomly(
-            length,
-            random,
-            count,
-            include_letters,
-            include_numbers,
-            include_symbols,
-            language,
-        )
-        # Set a name format compatible with special characters automatically if they are used
-        if include_symbols or True not in (
-            include_letters,
-            include_numbers,
-            include_symbols,
-        ):
-            name_format = 2
+    if input_strings:
+        strings = input_strings
     else:
-        strings = create_strings_from_dict(
-            length, random, count, lang_dict, 
-            preserve_indexing=preserve_indexing
-        )
+        # Creating synthetic sentences (or word)
+        strings = []
+
+        if use_wikipedia:
+            strings = create_strings_from_wikipedia(length, count, language)
+        elif input_file != "":
+            strings = create_strings_from_file(input_file, count)
+        elif random_sequences:
+            strings = create_strings_randomly(
+                length,
+                random,
+                count,
+                include_letters,
+                include_numbers,
+                include_symbols,
+                language,
+            )
+            # Set a name format compatible with special characters automatically if they are used
+            if include_symbols or True not in (
+                include_letters,
+                include_numbers,
+                include_symbols,
+            ):
+                name_format = 2
+        else:
+            strings = create_strings_from_dict(
+                length, random, count, lang_dict, 
+                preserve_indexing=preserve_indexing
+            )
 
     if language == "ar":
         from arabic_reshaper import ArabicReshaper
