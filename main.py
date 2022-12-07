@@ -543,47 +543,86 @@ def generate_text_data(
 
     string_count = len(strings)
 
-    p = Pool(thread_count)
-    for _ in tqdm(
-        p.imap_unordered(
-            FakeTextDataGenerator.generate_from_tuple,
-            zip(
-                [i for i in range(0, string_count)],
-                strings,
-                [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)],
-                [output_dir] * string_count,
-                [format] * string_count,
-                [extension] * string_count,
-                [skew_angle] * string_count,
-                [random_skew] * string_count,
-                [blur] * string_count,
-                [random_blur] * string_count,
-                [background] * string_count,
-                [distorsion] * string_count,
-                [distorsion_orientation] * string_count,
-                [handwritten] * string_count,
-                [name_format] * string_count,
-                [width] * string_count,
-                [alignment] * string_count,
-                [text_color] * string_count,
-                [orientation] * string_count,
-                [space_width] * string_count,
-                [character_spacing] * string_count,
-                [margins] * string_count,
-                [fit] * string_count,
-                [output_mask] * string_count,
-                [word_split] * string_count,
-                [image_dir] * string_count,
-                [stroke_width] * string_count,
-                [stroke_fill] * string_count,
-                [image_mode] * string_count,
-                [output_bboxes] * string_count,
+    if thread_count == 1:
+        # no Pool -- so debugging will be better
+        fonts = [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)]
+
+        for index in tqdm(range(0, string_count)):
+            FakeTextDataGenerator.generate(
+                index=index,
+                text=strings[index],
+                font=fonts[index],
+                out_dir=output_dir,
+                size=format,
+                extension=extension,
+                skewing_angle=skew_angle,
+                random_skew=random_skew,
+                blur=blur,
+                random_blur=random_blur,
+                background_type=background,
+                distorsion_type=distorsion,
+                distorsion_orientation=distorsion_orientation,
+                is_handwritten=handwritten,
+                name_format=name_format,
+                width=width,
+                alignment=alignment,
+                text_color=text_color,
+                orientation=orientation,
+                space_width=space_width,
+                character_spacing=character_spacing,
+                margins=margins,
+                fit=fit,
+                output_mask=output_mask,
+                word_split=word_split,
+                image_dir=image_dir,
+                stroke_width=stroke_width, 
+                stroke_fill=stroke_fill,
+                image_mode=image_mode, 
+                output_bboxes=output_bboxes,
+            )
+    else:
+        p = Pool(thread_count)
+        for _ in tqdm(
+            p.imap_unordered(
+                FakeTextDataGenerator.generate_from_tuple,
+                zip(
+                    [i for i in range(0, string_count)],
+                    strings,
+                    [fonts[rnd.randrange(0, len(fonts))] for _ in range(0, string_count)],
+                    [output_dir] * string_count,
+                    [format] * string_count,
+                    [extension] * string_count,
+                    [skew_angle] * string_count,
+                    [random_skew] * string_count,
+                    [blur] * string_count,
+                    [random_blur] * string_count,
+                    [background] * string_count,
+                    [distorsion] * string_count,
+                    [distorsion_orientation] * string_count,
+                    [handwritten] * string_count,
+                    [name_format] * string_count,
+                    [width] * string_count,
+                    [alignment] * string_count,
+                    [text_color] * string_count,
+                    [orientation] * string_count,
+                    [space_width] * string_count,
+                    [character_spacing] * string_count,
+                    [margins] * string_count,
+                    [fit] * string_count,
+                    [output_mask] * string_count,
+                    [word_split] * string_count,
+                    [image_dir] * string_count,
+                    [stroke_width] * string_count,
+                    [stroke_fill] * string_count,
+                    [image_mode] * string_count,
+                    [output_bboxes] * string_count,
+                ),
+            
             ),
-        ),
-        total=count,
-    ):
-        pass
-    p.terminate()
+            total=count,
+        ):
+            pass
+        p.terminate()
 
     if name_format == 2:
         # Create file with filename-to-label connections
