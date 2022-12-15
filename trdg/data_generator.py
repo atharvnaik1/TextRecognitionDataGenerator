@@ -277,6 +277,12 @@ class FakeTextDataGenerator(object):
                     (background_width - new_text_width - margin_right, margin_top),
                 )
 
+            ############################################
+            # Change background image mode (RGB, grayscale, etc.) #
+            ############################################
+            background_img = background_img.convert(image_mode)
+            background_mask = background_mask.convert(image_mode) 
+            
             #######################
             # Apply gaussian blur #
             #######################
