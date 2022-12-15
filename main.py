@@ -392,7 +392,7 @@ def parse_arguments():
         default=False,
     )
     parser.add_argument(
-        "input_strings", default=[], nargs='*',
+        "--input_strings", default=[], nargs='*',
         help="Option to pass tet directly from command line. It haws highest priority over others if this passed by suer"
     )
     return parser.parse_args()

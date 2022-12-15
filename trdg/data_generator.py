@@ -14,6 +14,8 @@ except ImportError as e:
     print("Missing modules for handwritten text generation.")
 
 import json
+import re
+
 
 class FakeTextDataGenerator(object):
     @classmethod
@@ -60,6 +62,11 @@ class FakeTextDataGenerator(object):
     ):
         try:
             image = None
+
+            # 15 dec 2022 : if output bboxes enabled multiple spaces in words cause issue, added below to fix
+            if output_bboxes:
+                # replace-multiple-whitespaces-by-one in input string
+                text = re.sub('\s+',' ', text)
 
             margin_top, margin_left, margin_bottom, margin_right = margins
             horizontal_margin = margin_left + margin_right
