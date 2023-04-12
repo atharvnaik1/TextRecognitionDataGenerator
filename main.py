@@ -405,6 +405,15 @@ def parse_arguments():
         """,
         default=False,
     )
+    parser.add_argument(
+        "-rcs",
+        "--random_case",
+        action="store_true",
+        help="""
+        Apply random case to text.
+        """,
+        default=False,
+    )
     return parser.parse_args()
 
 def generate_text_data(
@@ -419,7 +428,8 @@ def generate_text_data(
         random_sequences=False, random_skew=False, skew_angle=0, space_width=1.0, 
         stroke_fill='#282828', stroke_width=0, text_color='#282828', thread_count=1, 
         use_wikipedia=False, width=-1, word_split=True,
-        font_wise_separate_data=False, input_strings=[], random_margin=False,
+        font_wise_separate_data=False, input_strings=[], 
+        random_margin=False, random_case=False,
     ):
     """
     Generate text data
@@ -554,10 +564,34 @@ def generate_text_data(
             " ".join([arabic_reshaper.reshape(w) for w in s.split(" ")[::-1]])
             for s in strings
         ]
-    if case == "upper":
-        strings = [x.upper() for x in strings]
-    if case == "lower":
-        strings = [x.lower() for x in strings]
+
+    if random_case:
+        from random import choice
+        lst_case = ["upper", "lower", "title", "swapcase", "original"]
+        modified_strings = []
+        for s in strings:
+            case_choosen = choice(lst_case)
+
+            if case_choosen == "upper":
+                s = s.upper()
+            elif case_choosen == "lower":
+                s = s.lower()
+            elif case_choosen == "title":
+                s = s.title()
+            elif case_choosen == "swapcase":
+                s = s.swapcase()
+            else:
+                pass
+            modified_strings.append(s)
+        
+        # print(f"random strings enabled: modified_strings: {modified_strings}")
+        # assign new
+        strings = modified_strings
+    else:
+        if case == "upper":
+            strings = [x.upper() for x in strings]
+        if case == "lower":
+            strings = [x.lower() for x in strings]
 
     string_count = len(strings)
 
