@@ -59,6 +59,7 @@ class FakeTextDataGenerator(object):
         stroke_fill="#282828",
         image_mode="RGB", 
         output_bboxes=0,
+        random_margin=False,
     ):
         try:
             image = None
@@ -69,6 +70,16 @@ class FakeTextDataGenerator(object):
                 text = re.sub('\s+',' ', text)
 
             margin_top, margin_left, margin_bottom, margin_right = margins
+
+            # update 12 April 2023 -- add random margin if enabled
+            if random_margin:
+                from random import randint
+                margin_top = randint(0, margin_top + 1)
+                margin_left = randint(0, margin_left + 1)
+                margin_bottom = randint(0, margin_bottom + 1)
+                margin_right = randint(0, margin_right + 1)
+            # end update
+                
             horizontal_margin = margin_left + margin_right
             vertical_margin = margin_top + margin_bottom
 

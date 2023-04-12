@@ -395,6 +395,16 @@ def parse_arguments():
         "--input_strings", default=[], nargs='*',
         help="Option to pass tet directly from command line. It haws highest priority over others if this passed by suer"
     )
+    parser.add_argument(
+        "-rmg",
+        "--random_margin",
+        action="store_true",
+        help="""
+        Apply random diffrent margin around image. As text detector result will be of 
+        diffrent pixels margin around detected text, so enabling this can mimic similar same behaviour.
+        """,
+        default=False,
+    )
     return parser.parse_args()
 
 def generate_text_data(
@@ -409,7 +419,7 @@ def generate_text_data(
         random_sequences=False, random_skew=False, skew_angle=0, space_width=1.0, 
         stroke_fill='#282828', stroke_width=0, text_color='#282828', thread_count=1, 
         use_wikipedia=False, width=-1, word_split=True,
-        font_wise_separate_data=False, input_strings=[],
+        font_wise_separate_data=False, input_strings=[], random_margin=False,
     ):
     """
     Generate text data
@@ -460,6 +470,7 @@ def generate_text_data(
         width (int, optional): _description_. Defaults to -1.
         word_split (bool, optional): _description_. Defaults to True.
         font_wise_separate_data (bool, optional): _description_. Defaults to False.
+        random_margin(bool, optional): If true, it will add rando margin around rendered text.
     """
     # Create the directory if it does not exist.
     try:
@@ -586,6 +597,7 @@ def generate_text_data(
                 stroke_fill=stroke_fill,
                 image_mode=image_mode, 
                 output_bboxes=output_bboxes,
+                random_margin=random_margin,
             )
     else:
         p = Pool(thread_count)
@@ -623,6 +635,7 @@ def generate_text_data(
                     [stroke_fill] * string_count,
                     [image_mode] * string_count,
                     [output_bboxes] * string_count,
+                    [random_margin] * string_count,
                 ),
             
             ),
