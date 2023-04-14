@@ -1,0 +1,13 @@
+
+python3 main.py  --count 100 --name_format 3 --font_wise_separate_data  --font "./trdg/fonts/latin/AllerDisplay.ttf" --output_dir "./out/sample" --margins "5,5,5,5" --fit --random_margin --random_case
+
+
+python3 main.py --font_wise_separate_data --margins "5,5,5,5" --fit --random_margin --random_case --background 3 --image_dir "./background/combined-backgrounds/" --name_format 4 --image_mode "RGB" --extension "jpeg" --text_color "#000000,#070504" --preserve_indexing --count 1000 --output_dir "./out/en_all_fonts_1k_per_font"
+
+python3 main.py --font_wise_separate_data --margins "5,5,5,5" --fit --random_margin --random_case --background 3 --image_dir "./background/combined-backgrounds/" --name_format 4 --image_mode "RGB" --extension "jpeg" --text_color "#000000,#070504" --preserve_indexing --count 50000 --output_dir "./out/en_all_fonts_50k_per_font"
+
+--------------------------------------------------------------------------------
+
+Validation set: shuffled data:
+
+python3 main.py --font_wise_separate_data --margins "5,5,5,5" --fit --random_margin --random_case --background 3 --image_dir "./background/combined-backgrounds/" --name_format 4 --image_mode "RGB" --extension "jpeg" --text_color "#000000,#070504" --count 6000 --output_dir "./out/en_all_fonts_6k_per_font"
