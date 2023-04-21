@@ -414,6 +414,18 @@ def parse_arguments():
         """,
         default=False,
     )
+    parser.add_argument(
+        "-sid",
+        "--start_index",
+        type=int, 
+        nargs="?",
+        help="""
+        From which string to start rendering. Only works if preserve indexing set to true
+        Useful when their will be 100K plus lines of strings and we are rendering data chunk by chunk.
+        Example. In font recognition data geneartion first rendered 50K from 400K data, then next records will be generated
+        """,
+        default=0,
+    )
     return parser.parse_args()
 
 def generate_text_data(
@@ -429,7 +441,7 @@ def generate_text_data(
         stroke_fill='#282828', stroke_width=0, text_color='#282828', thread_count=1, 
         use_wikipedia=False, width=-1, word_split=True,
         font_wise_separate_data=False, input_strings=[], 
-        random_margin=False, random_case=False,
+        random_margin=False, random_case=False, start_index=0,
     ):
     """
     Generate text data
@@ -545,7 +557,8 @@ def generate_text_data(
         else:
             strings = create_strings_from_dict(
                 length, random, count, lang_dict, 
-                preserve_indexing=preserve_indexing
+                preserve_indexing=preserve_indexing,
+                start_index=start_index,
             )
 
     if language == "ar":

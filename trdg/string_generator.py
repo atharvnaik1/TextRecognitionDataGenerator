@@ -27,7 +27,7 @@ def create_strings_from_file(filename, count):
 
 
 def create_strings_from_dict(
-    length, allow_variable, count, lang_dict, preserve_indexing=False
+    length, allow_variable, count, lang_dict, preserve_indexing=False, start_index=0,
     ):
     """
         Create all strings by picking X random word in the dictionnary
@@ -36,6 +36,7 @@ def create_strings_from_dict(
     """
 
     dict_len = len(lang_dict)
+    # print(f"dict length: {dict_len}")
 
     # preserve_indexing = True ## for development purpose
         
@@ -46,7 +47,10 @@ def create_strings_from_dict(
             if index >= dict_len:
                 current_string = lang_dict[index % dict_len]
             else:
-                current_string = lang_dict[index]
+                if start_index > 0 and start_index + index < dict_len:
+                    current_string = lang_dict[start_index + index]
+                else:
+                    current_string = lang_dict[index]
 
             strings.append(current_string)
         else:
