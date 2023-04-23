@@ -11,3 +11,22 @@ python3 main.py --font_wise_separate_data --margins "5,5,5,5" --fit --random_mar
 Validation set: shuffled data:
 
 python3 main.py --font_wise_separate_data --margins "5,5,5,5" --fit --random_margin --random_case --background 3 --image_dir "./background/combined-backgrounds/" --name_format 4 --image_mode "RGB" --extension "jpeg" --text_color "#000000,#070504" --count 6000 --output_dir "./out/en_all_fonts_6k_per_font"
+
+============================================================================================
+
+Start index:
+
+python3 main.py  --count 100 --name_format 3 --font_wise_separate_data  --font "./trdg/fonts/latin/AllerDisplay.ttf" --output_dir "./out/sample" --margins "5,5,5,5" --fit --random_margin --random_case  --preserve_indexing --start_index 101
+
+=================================================================================
+50K subset 2 -- dict value range from 50001 to 100,000
+
+python3 main.py --font_wise_separate_data --margins "5,5,5,5" --fit --random_margin --random_case --background 3 --image_dir "./background/combined-backgrounds/" --name_format 4 --image_mode "RGB" --extension "jpeg" --text_color "#000000,#070504" --preserve_indexing --count 50000 --start_index 50001 --output_dir "./out/en_all_fonts_50k_per_font_set_2"
+
+==========================================================================================
+=======================================================================================================
+Arabic
+----
+Added langugae 'ar' and --word_split
+
+python3 main.py --font_wise_separate_data --margins "5,5,5,5" --fit --random_margin --random_case --background 3 --image_dir "./background/combined-backgrounds/" --name_format 4 --image_mode "RGB" --extension "jpeg" --text_color "#000000,#070504" --preserve_indexing --language ar --word_split --count 1000 --start_index 0 --output_dir "./out/ar_all_fonts_1k_per_font"
