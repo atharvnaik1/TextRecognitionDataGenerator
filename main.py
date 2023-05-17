@@ -11,7 +11,7 @@ Usage:
     python main.py  --count 5 --name_format 3 --font_wise_separate_data
 
 2) Specific font:
-  python trdg/run.py  --count 5 --name_format 3 --font_wise_separate_data  --font "./trdg/fonts/latin/AllerDisplay.ttf"
+  python main.py  --count 5 --name_format 3 --font_wise_separate_data  --font "./trdg/fonts/latin/AllerDisplay.ttf"
 
 """
 import argparse
